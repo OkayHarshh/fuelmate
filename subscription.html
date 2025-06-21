@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FuelMate - Premium Subscription</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FFA630;
+            --primary-light: #FFB347;
+            --primary-dark: #E68A00;
+            --secondary: #2A4E6B;
+            --secondary-light: #3A6B8F;
+            --dark: #0F1A24;
+            --darker: #0A121A;
+            --darkest: #050A0F;
+            --light: #F8FAFC;
+            --gray: #E2E8F0;
+            --gray-dark: #94A3B8;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.25);
+            --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.3);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --glow: 0 0 15px rgba(255, 166, 48, 0.5);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--darkest);
+            color: var(--light);
+            line-height: 1.7;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        ::selection {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        /* App Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--dark);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: var(--darker);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+        }
+        
+        .sidebar-collapsed {
+            width: 80px;
+            align-items: center;
+        }
+        
+        .sidebar-collapsed .logo-text,
+        .sidebar-collapsed .nav-item-text,
+        .sidebar-collapsed .user-name,
+        .sidebar-collapsed .user-email {
+            display: none;
+        }
+        
+        .sidebar-collapsed .nav-item {
+            justify-content: center;
+        }
+        
+        .sidebar-collapsed .user-avatar {
+            margin-right: 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-left: 10px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-right: 12px;
+        }
+        
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-menu {
+            flex: 1;
+            margin-top: 20px;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 8px;
+            transition: var(--transition);
+            color: var(--gray-dark);
+        }
+        
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+        }
+        
+        .nav-item.active {
+            background-color: rgba(255, 166, 48, 0.1);
+            color: var(--primary);
+            box-shadow: var(--glow);
+        }
+        
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .nav-item-text {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .user-profile {
+            margin-top: auto;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background-color: rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-right: 12px;
+            background-image: url('https://randomuser.me/api/portraits/men/32.jpg');
+            background-size: cover;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .user-email {
+            font-size: 0.8rem;
+            color: var(--gray-dark);
+        }
+        
+        .toggle-sidebar {
+            position: absolute;
+            top: 30px;
+            right: -12px;
+            width: 24px;
+            height: 24px;
+            background-color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-dark);
+            cursor: pointer;
+            border: 2px solid var(--darker);
+            transition: var(--transition);
+        }
+        
+        .toggle-sidebar:hover {
+            color: var(--primary);
+            transform: rotate(180deg);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+        
+        .main-content.expanded {
+            margin-left: 80px;
+        }
+        
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: rgba(15, 26, 36, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-dark);
+        }
+        
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .notification-btn, .user-menu-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--gray-dark);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .notification-btn:hover, .user-menu-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: var(--light);
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 18px;
+            height: 18px;
+            background-color: var(--danger);
+            border-radius: 50%;
+            color: white;
+            font-size: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--dark);
+        }
+        
+        /* App Content */
+        .app-content {
+            padding: 30px 40px;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--light), var(--gray));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .page-title p {
+            color: var(--gray-dark);
+            font-size: 0.95rem;
+        }
+        
+        .page-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        /* Subscription Hero Section */
+        .subscription-hero {
+            background: linear-gradient(135deg, rgba(255, 166, 48, 0.1), rgba(42, 78, 107, 0.1));
+            border-radius: var(--border-radius-lg);
+            padding: 60px;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .subscription-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1518544866330-95a2bec01e13?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-content p {
+            max-width: 700px;
+            margin: 0 auto 25px;
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+        
+        .badge-premium {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--darkest);
+            font-weight: 700;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            box-shadow: var(--glow);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        
+        /* Pricing Plans */
+        .pricing-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .pricing-card {
+            background-color: var(--darker);
+            border-radius: var(--border-radius-lg);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+        
+        .pricing-card.popular {
+            border: 2px solid var(--primary);
+            box-shadow: var(--glow);
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background-color: var(--primary);
+            color: var(--darkest);
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+        
+        .pricing-tier {
+            font-size: 1.2rem;
+            color: var(--gray-dark);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .pricing-card.popular .pricing-tier {
+            color: var(--primary);
+        }
+        
+        .pricing-amount {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--light), var(--gray));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .pricing-card.popular .pricing-amount {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .pricing-period {
+            font-size: 1rem;
+            color: var(--gray-dark);
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features {
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .feature-item i {
+            margin-right: 10px;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .pricing-card.popular .feature-item i {
+            color: var(--primary-light);
+        }
+        
+        .feature-item.disabled {
+            color: var(--gray-dark);
+        }
+        
+        .feature-item.disabled i {
+            color: var(--gray-dark);
+        }
+        
+        /* Benefits Section */
+        .benefits-section {
+            margin-bottom: 50px;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .benefit-card {
+            background-color: var(--darker);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(255, 166, 48, 0.2);
+        }
+        
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            box-shadow: 0 8px 20px rgba(255, 166, 48, 0.3);
+        }
+        
+        .benefit-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .benefit-desc {
+            color: var(--gray-dark);
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        
+        /* Testimonials */
+        .testimonials-section {
+            margin-bottom: 50px;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .testimonial-card {
+            background-color: var(--darker);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            margin-right: 15px;
+            background-size: cover;
+        }
+        
+        .testimonial-author {
+            flex: 1;
+        }
+        
+        .author-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .author-title {
+            font-size: 0.8rem;
+            color: var(--gray-dark);
+        }
+        
+        .testimonial-rating {
+            color: var(--warning);
+        }
+        
+        .testimonial-content {
+            font-style: italic;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-date {
+            font-size: 0.8rem;
+            color: var(--gray-dark);
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            margin-bottom: 50px;
+        }
+        
+        .faq-item {
+            background-color: var(--darker);
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .faq-question:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        
+        .faq-question h4 {
+            font-size: 1.1rem;
+        }
+        
+        .faq-toggle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+        
+        .faq-question.active .faq-toggle {
+            transform: rotate(45deg);
+            background-color: var(--primary);
+            color: var(--darkest);
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .faq-question.active + .faq-answer {
+            padding: 0 20px 20px;
+            max-height: 500px;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(255, 166, 48, 0.1), rgba(42, 78, 107, 0.2));
+            border-radius: var(--border-radius-lg);
+            padding: 60px;
+            text-align: center;
+            margin-bottom: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--darkest);
+            box-shadow: 0 4px 15px rgba(255, 166, 48, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 166, 48, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .btn-lg {
+            padding: 16px 32px;
+            font-size: 1.1rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 80px;
+                align-items: center;
+            }
+            
+            .sidebar .logo-text,
+            .sidebar .nav-item-text,
+            .sidebar .user-name,
+            .sidebar .user-email {
+                display: none;
+            }
+            
+            .sidebar .nav-item {
+                justify-content: center;
+            }
+            
+            .sidebar .user-avatar {
+                margin-right: 0;
+            }
+            
+            .main-content {
+                margin-left: 80px;
+            }
+            
+            .sidebar-collapsed {
+                width: 280px;
+                align-items: stretch;
+            }
+            
+            .sidebar-collapsed .logo-text,
+            .sidebar-collapsed .nav-item-text,
+            .sidebar-collapsed .user-name,
+            .sidebar-collapsed .user-email {
+                display: block;
+            }
+            
+            .sidebar-collapsed .nav-item {
+                justify-content: flex-start;
+            }
+            
+            .sidebar-collapsed .user-avatar {
+                margin-right: 12px;
+            }
+            
+            .main-content.expanded {
+                margin-left: 280px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .container {
+                padding: 0 30px;
+            }
+            
+            .app-content {
+                padding: 20px 30px;
+            }
+            
+            .subscription-hero {
+                padding: 40px;
+            }
+            
+            .hero-content h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .top-bar {
+                padding: 15px 20px;
+            }
+            
+            .app-content {
+                padding: 15px 20px;
+            }
+            
+            .subscription-hero {
+                padding: 30px 20px;
+            }
+            
+            .hero-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .pricing-plans {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-content h2 {
+                font-size: 1.6rem;
+            }
+            
+            .pricing-amount {
+                font-size: 2.5rem;
+            }
+            
+            .btn-lg {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-gas-pump"></i>
+                </div>
+                <div class="logo-text">FuelMate</div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="b.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-item-text">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-bolt"></i>
+                    <span class="nav-item-text">Quick Order</span>
+                </a>
+                <a href="orderhistory.html" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span class="nav-item-text">Order History</span>
+                </a>
+                <a href="mycar.html" class="nav-item">
+                    <i class="fas fa-car"></i>
+                    <span class="nav-item-text">My Vehicles</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-wallet"></i>
+                    <span class="nav-item-text">Payment Methods</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-crown"></i>
+                    <span class="nav-item-text">Premium</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span class="nav-item-text">Help Center</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span class="nav-item-text">Settings</span>
+                </a>
+            </nav>
+            
+            <div class="user-profile">
+                <div class="user-avatar">JD</div>
+                <div class="user-info">
+                    <div class="user-name">John Doe</div>
+                    <div class="user-email">john@example.com</div>
+                </div>
+            </div>
+            
+            <div class="toggle-sidebar" id="toggleSidebar">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                
+                <div class="top-actions">
+                    <div class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <div class="notification-badge">3</div>
+                    </div>
+                    <div class="user-menu-btn">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- App Content -->
+            <div class="app-content">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>FuelMate Premium</h1>
+                        <p>Unlock exclusive benefits and priority services</p>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-gift"></i> Gift Premium
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Hero Section -->
+                <div class="subscription-hero">
+                    <div class="hero-content">
+                        <span class="badge-premium">Premium</span>
+                        <h2>Fuel Up Your Experience</h2>
+                        <p>Join FuelMate Premium to enjoy faster deliveries, exclusive discounts, and priority support. Never worry about running out of fuel again with our premium benefits.</p>
+                        <button class="btn btn-primary btn-lg">
+                            <i class="fas fa-bolt"></i> Get Premium Now
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Pricing Plans -->
+                <h2 style="margin-bottom: 30px; font-size: 1.8rem;">Choose Your Plan</h2>
+                <div class="pricing-plans">
+                    <div class="pricing-card">
+                        <div class="pricing-tier">Basic</div>
+                        <div class="pricing-amount">₹0</div>
+                        <div class="pricing-period">Free Forever</div>
+                        <div class="pricing-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> Standard Delivery
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> Basic Support
+                            </div>
+                            <div class="feature-item disabled">
+                                <i class="fas fa-times"></i> No Priority Service
+                            </div>
+                            <div class="feature-item disabled">
+                                <i class="fas fa-times"></i> Ads Included
+                            </div>
+                            <div class="feature-item disabled">
+                                <i class="fas fa-times"></i> No Exclusive Discounts
+                            </div>
+                            <div class="feature-item disabled">
+                                <i class="fas fa-times"></i> Standard Business Hours
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary" style="width: 100%;">
+                            Current Plan
+                        </button>
+                    </div>
+                    
+                    <div class="pricing-card popular">
+                        <div class="popular-badge">Most Popular</div>
+                        <div class="pricing-tier">Premium</div>
+                        <div class="pricing-amount">₹19.99</div>
+                        <div class="pricing-period">per month</div>
+                        <div class="pricing-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> <strong>Instant Delivery</strong> (15-20 min)
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> <strong>Priority Support</strong> (24/7)
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> <strong>Ad-Free Experience</strong>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> <strong>Exclusive Discounts</strong> (Up to 20%)
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> <strong>Emergency Fuel</strong> (Top Priority)
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> <strong>Free Monthly Wash</strong>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-crown"></i> Upgrade Now
+                        </button>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <div class="pricing-tier">Annual</div>
+                        <div class="pricing-amount">₹199</div>
+                        <div class="pricing-period">per year (Save 17%)</div>
+                        <div class="pricing-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> <strong>Instant Delivery</strong> (15-20 min)
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> <strong>Priority Support</strong> (24/7)
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> <strong>Ad-Free Experience</strong>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> <strong>Exclusive Discounts</strong> (Up to 25%)
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> <strong>Emergency Fuel</strong> (Top Priority)
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> <strong>Free Bi-Monthly Wash</strong>
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary" style="width: 100%;">
+                            <i class="fas fa-calendar-alt"></i> Choose Annual
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Benefits Section -->
+                <div class="benefits-section">
+                    <h2 style="margin-bottom: 30px; font-size: 1.8rem;">Premium Benefits</h2>
+                    <div class="benefits-grid">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3 class="benefit-title">Priority Delivery</h3>
+                            <p class="benefit-desc">Jump to the front of the line with our priority delivery system. Get your fuel in 15-20 minutes guaranteed, even during peak hours.</p>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> Average delivery time: <strong>18 minutes</strong>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-ad"></i>
+                            </div>
+                            <h3 class="benefit-title">Ad-Free Experience</h3>
+                            <p class="benefit-desc">Enjoy a completely ad-free experience across the entire FuelMate platform. No more interruptions or distractions.</p>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> Clean, uninterrupted interface
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <h3 class="benefit-title">24/7 Priority Support</h3>
+                            <p class="benefit-desc">Get immediate access to our premium support team any time of day. Average response time under 2 minutes for Premium members.</p>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> Dedicated support line
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-car-battery"></i>
+                            </div>
+                            <h3 class="benefit-title">Emergency Fuel Service</h3>
+                            <p class="benefit-desc">Ran out of fuel? Our emergency service will prioritize your location and get to you within 30 minutes, 24/7.</p>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> 3 free emergency calls/year
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-car-wash"></i>
+                            </div>
+                            <h3 class="benefit-title">Free Vehicle Washes</h3>
+                            <p class="benefit-desc">Monthly complimentary vehicle wash with any fuel delivery. Keep your car looking its best all year round.</p>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> Premium detailing options
+                            </div>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <h3 class="benefit-title">Exclusive Discounts</h3>
+                            <p class="benefit-desc">Access members-only discounts on fuel and additional services. Save up to 20% on every delivery.</p>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i> Weekly special offers                            <div class="feature-item">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonials Section -->
+                <div class="testimonials-section">
+                    <h2 style="margin-bottom: 30px; font-size: 1.8rem;">What Our Premium Members Say</h2>
+                    <div class="testimonials-grid">
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar" style="background-image: url('https://randomuser.me/api/portraits/women/44.jpg')"></div>
+                                <div class="testimonial-author">
+                                    <div class="author-name">Sarah Johnson</div>
+                                    <div class="author-title">Premium Member for 2 years</div>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                "FuelMate Premium has been a game-changer for my business. The priority delivery means I never have to worry about being late to client meetings because I'm waiting for fuel. Worth every penny!"
+                            </div>
+                            <div class="testimonial-date">March 15, 2023</div>
+                        </div>
+                        
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar" style="background-image: url('https://randomuser.me/api/portraits/men/22.jpg')"></div>
+                                <div class="testimonial-author">
+                                    <div class="author-name">Michael Chen</div>
+                                    <div class="author-title">Premium Member for 1 year</div>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                "The emergency fuel service saved me when I ran out of gas on the highway at midnight. They were there in 25 minutes! The membership paid for itself that night."
+                            </div>
+                            <div class="testimonial-date">January 5, 2023</div>
+                        </div>
+                        
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar" style="background-image: url('https://randomuser.me/api/portraits/women/63.jpg')"></div>
+                                <div class="testimonial-author">
+                                    <div class="author-name">Emily Rodriguez</div>
+                                    <div class="author-title">New Premium Member</div>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                "I was hesitant at first, but the discounts alone have saved me more than the membership costs. Plus the app is so much nicer without ads cluttering everything up."
+                            </div>
+                            <div class="testimonial-date">May 2, 2023</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ Section -->
+                <div class="faq-section">
+                    <h2 style="margin-bottom: 30px; font-size: 1.8rem;">Frequently Asked Questions</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h4>What payment methods do you accept?</h4>
+                            <div class="faq-toggle">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We accept all major credit cards (Visa, Mastercard, American Express), PayPal, Apple Pay, Google Pay, and bank transfers. Premium subscriptions will automatically renew using your selected payment method unless canceled.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h4>Can I cancel my Premium subscription anytime?</h4>
+                            <div class="faq-toggle">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, you can cancel your Premium subscription at any time. If you cancel during your billing period, you'll continue to have access to Premium features until the end of that period. We don't charge cancellation fees.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h4>Is there a free trial for Premium?</h4>
+                            <div class="faq-toggle">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We occasionally offer free trials for new users. Currently, we have a 7-day free trial available for first-time Premium subscribers. After the trial period, your subscription will automatically continue unless canceled.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h4>How does the priority delivery work?</h4>
+                            <div class="faq-toggle">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>When you place an order as a Premium member, our system prioritizes your delivery ahead of non-Premium orders. Our drivers are notified of Premium deliveries and will route accordingly. We guarantee delivery within 15-20 minutes in urban areas, or your next delivery is free.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h4>Are the discounts applicable to all fuel types?</h4>
+                            <div class="faq-toggle">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Premium discounts apply to all standard fuel types (Regular, Premium, Diesel). Some specialty fuels or additives may be excluded from discounts. The discount percentage may vary based on current market conditions but will always be at least 15% for Premium members.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CTA Section -->
+                <div class="cta-section">
+                    <h2>Ready to Upgrade Your Fuel Experience?</h2>
+                    <p>Join thousands of satisfied Premium members enjoying faster deliveries, exclusive discounts, and peace of mind on the road.</p>
+                    <button class="btn btn-primary btn-lg">
+                        <i class="fas fa-crown"></i> Get FuelMate Premium Now
+                    </button>
+                    <p style="margin-top: 20px; font-size: 0.9rem; color: var(--gray-dark);">7-day free trial available. Cancel anytime.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sidebar
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        
+        toggleSidebar.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-collapsed');
+            mainContent.classList.toggle('expanded');
+            
+            // Rotate the toggle icon
+            const icon = toggleSidebar.querySelector('i');
+            if (sidebar.classList.contains('sidebar-collapsed')) {
+                icon.classList.remove('fa-chevron-left');
+                icon.classList.add('fa-chevron-right');
+            } else {
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-left');
+            }
+        });
+        
+        // FAQ toggle functionality
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                question.classList.toggle('active');
+                
+                // Toggle plus/minus icon
+                const icon = question.querySelector('.faq-toggle i');
+                if (question.classList.contains('active')) {
+                    icon.classList.remove('fa-plus');
+                    icon.classList.add('fa-minus');
+                } else {
+                    icon.classList.remove('fa-minus');
+                    icon.classList.add('fa-plus');
+                }
+            });
+        });
+        
+        // Responsive adjustments
+        function handleResponsive() {
+            if (window.innerWidth <= 1200) {
+                sidebar.classList.add('sidebar-collapsed');
+                mainContent.classList.add('expanded');
+                toggleSidebar.querySelector('i').classList.add('fa-chevron-right');
+                toggleSidebar.querySelector('i').classList.remove('fa-chevron-left');
+            } else {
+                sidebar.classList.remove('sidebar-collapsed');
+                mainContent.classList.remove('expanded');
+                toggleSidebar.querySelector('i').classList.add('fa-chevron-left');
+                toggleSidebar.querySelector('i').classList.remove('fa-chevron-right');
+            }
+        }
+        
+        // Run on load and resize
+        window.addEventListener('load', handleResponsive);
+        window.addEventListener('resize', handleResponsive);
+    </script>
+
+<h3>Plan: <span id="subscription-plan"></span></h3>
+<script>
+const user = JSON.parse(localStorage.getItem("fuelmateUser"));
+document.getElementById("subscription-plan").textContent = user.subscription;
+</script>
+<script src="fakeBackend.js"></script>
+
+</body>
+</html>
+                           
